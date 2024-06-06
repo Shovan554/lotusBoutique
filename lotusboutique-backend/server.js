@@ -22,8 +22,11 @@ db.sequelize.authenticate()
 // Routes
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+app.use('/api/categories', require('./routes/category.routes'));
+app.use('/api/products', require('./routes/product.routes'));
 
-db.sequelize.sync().then(() => {
+// Sync database and start server
+db.sequelize.sync({ force: true }).then(() => {
   console.log('Drop and Resync Database with { force: true }');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
